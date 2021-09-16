@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_15_182613) do
+ActiveRecord::Schema.define(version: 2021_09_16_000732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,42 @@ ActiveRecord::Schema.define(version: 2021_09_15_182613) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tokens", force: :cascade do |t|
+    t.string "name"
+    t.string "image"
+    t.integer "project_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_tokens_on_project_id"
+  end
+
+  create_table "trait_options", force: :cascade do |t|
+    t.integer "project_id"
+    t.integer "trait_type_id"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_trait_options_on_project_id"
+    t.index ["trait_type_id"], name: "index_trait_options_on_trait_type_id"
+  end
+
+  create_table "trait_types", force: :cascade do |t|
+    t.integer "project_id"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_trait_types_on_project_id"
+  end
+
+  create_table "trait_values", force: :cascade do |t|
+    t.integer "trait_option_id"
+    t.integer "token_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["token_id"], name: "index_trait_values_on_token_id"
+    t.index ["trait_option_id"], name: "index_trait_values_on_trait_option_id"
   end
 
 end
