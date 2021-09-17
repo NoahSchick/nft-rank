@@ -15,19 +15,19 @@ ActiveRecord::Schema.define(version: 2021_09_16_000732) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "projects", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "tokens", force: :cascade do |t|
+  create_table "items", force: :cascade do |t|
     t.string "name"
     t.string "image"
     t.integer "project_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["project_id"], name: "index_tokens_on_project_id"
+    t.index ["project_id"], name: "index_items_on_project_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "trait_options", force: :cascade do |t|
@@ -50,10 +50,10 @@ ActiveRecord::Schema.define(version: 2021_09_16_000732) do
 
   create_table "trait_values", force: :cascade do |t|
     t.integer "trait_option_id"
-    t.integer "token_id"
+    t.integer "item_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["token_id"], name: "index_trait_values_on_token_id"
+    t.index ["item_id"], name: "index_trait_values_on_item_id"
     t.index ["trait_option_id"], name: "index_trait_values_on_trait_option_id"
   end
 
